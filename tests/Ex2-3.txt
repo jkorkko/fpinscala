@@ -1,0 +1,22 @@
+// tests generated with Gemini
+// Commands to test Exercise 2.3 (curry)
+// Run: sbt "project exercises" console
+
+import fpinscala.gettingstarted.PolymorphicFunctions._
+
+val add = (x: Int, y: Int) => x + y
+val curriedAdd = curry(add)
+
+val add10 = curriedAdd(10)
+add10(5) // should be 15
+
+assert(add10(20) == 30)
+assert(curriedAdd(4)(6) == 10)
+
+val greeting = (prefix: String, name: String) => s"$prefix, $name!"
+val curriedGreeting = curry(greeting)
+val hello = curriedGreeting("Hello")
+hello("stranger") // should be "Hello stranger!"
+
+assert(hello("Alice") == "Hello, Alice!")
+assert(curriedGreeting("Hi")("Bob") == "Hi, Bob!")
