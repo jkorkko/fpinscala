@@ -1,0 +1,45 @@
+================================================================================
+EXERCISE 2.2 TESTING GUIDE (isSorted)
+================================================================================
+
+1. PREPARATION
+--------------
+Ensure your implementation is saved in:
+  exercises/src/main/scala/fpinscala/gettingstarted/GettingStarted.scala
+
+
+
+Run in project root:
+  $ sbt "project exercises" compile ## optional
+  $ sbt "project exercises" console
+
+2. REPL COMMANDS
+----------------
+Copy and paste into the sbt console (scala>):
+
+// Import polymorphic functions
+import fpinscala.gettingstarted.PolymorphicFunctions._
+
+// Define test comparator functions
+val lte = (a: Int, b: Int) => a <= b
+val strLen = (a: String, b: String) => a.length <= b.length
+
+// --- Passing Cases (Expect: true) ---
+isSorted(Array(1, 2, 3, 4, 5), lte)         // Expected: true
+isSorted(Array(1, 1, 2, 3, 3), lte)         // Expected: true
+isSorted(Array("a", "bb", "ccc"), strLen)   // Expected: true
+
+// --- Failing Cases (Expect: false) ---
+isSorted(Array(1, 3, 2, 4), lte)            // Expected: false
+isSorted(Array(5, 4, 3, 2, 1), lte)         // Expected: false
+isSorted(Array(2, 1), lte)                  // Expected: false
+isSorted(Array("ccc", "a"), strLen)         // Expected: false
+
+
+// --- Boundary & Edge Cases (Must not throw IndexOutOfBoundsException) ---
+isSorted(Array.empty[Int], lte)             // Expected: true
+isSorted(Array(42), lte)                    // Expected: true
+
+3. EXIT
+-------
+scala> :quit or Ctrl+C

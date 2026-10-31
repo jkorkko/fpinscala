@@ -1,0 +1,37 @@
+================================================================================
+EXERCISE 2.1 TESTING GUIDE (Fibonacci)
+tests generated with Gemini
+================================================================================
+
+1. PREPARATION
+--------------
+Ensure your implementation is saved in:
+  exercises/src/main/scala/fpinscala/gettingstarted/GettingStarted.scala
+
+Run in project root:
+  $ sbt "project exercises" console
+
+2. REPL COMMANDS
+----------------
+Copy and paste into the sbt console (scala>):
+
+// Import the module containing fib
+import fpinscala.gettingstarted.MyModule._
+
+// Base cases
+fib(0)    // Expected: 0
+fib(1)    // Expected: 1
+
+// Sequence checks
+fib(2)    // Expected: 1
+fib(3)    // Expected: 2
+fib(4)    // Expected: 3
+fib(5)    // Expected: 5
+fib(6)    // Expected: 8
+fib(7)    // Expected: 13
+fib(10)   // Expected: 55
+fib(20)   // Expected: 6765
+
+3. EXIT
+-------
+scala> :quit or Ctrl+C
