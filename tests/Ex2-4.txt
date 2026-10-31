@@ -1,0 +1,19 @@
+// tests generated with Gemini
+// Commands to test Exercise 2.4 (uncurry)
+// Run: sbt "project exercises" console
+
+import fpinscala.gettingstarted.PolymorphicFunctions._
+
+val curriedAdd: Int => Int => Int = x => y => x + y
+val add = uncurry(curriedAdd)
+add(5, -5)      // should be 0
+assert(add(10, 20) == 30)
+
+val curriedRepeat: String => Int => String = s => n => s * n
+val repeat = uncurry(curriedRepeat)
+repeat("test", 2)       // should be "testtest"
+assert(repeat("Scala", 3) == "ScalaScalaScala")
+
+val original = (a: Int, b: String) => s"$b: $a"
+val roundTripped = uncurry(curry(original))
+assert(roundTripped(42, "Answer") == "Answer: 42")
