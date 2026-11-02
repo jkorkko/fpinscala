@@ -1,0 +1,53 @@
+================================================================================
+EXERCISE 3.5 TESTING GUIDE (dropWhile)
+================================================================================
+*NOTE tests generated with Gemini*
+GOAL:
+Remove elements from the List prefix as long as they match a given predicate.
+Signature: def dropWhile[A](l: List[A], f: A => Boolean): List[A]
+
+1. PREPARATION
+--------------
+
+Ensure your implementation is saved in:
+  exercises/src/main/scala/fpinscala/datastructures/List.scala
+
+Run in project root:
+  $ sbt "project exercises" console
+
+2. REPL COMMANDS
+----------------
+Copy and paste into the sbt console (scala>):
+
+import fpinscala.datastructures._
+import fpinscala.datastructures.List._
+val nums = List(1, 2, 3, 4, 5, 1, 2)
+
+
+// --- Test Case 1: Drop prefix until predicate becomes false ---
+// Drops 1 and 2, but stops at 3 (even though 1 and 2 appear later)
+assert(dropWhile(nums, (x: Int) => x < 3) == List(3, 4, 5, 1, 2))
+
+// --- Test Case 2: Predicate matches every element ---
+// Dropping while all elements match should result in Nil
+assert(dropWhile(nums, (x: Int) => x < 10) == Nil)
+
+// --- Test Case 3: Predicate matches none of the prefix ---
+// First element (1) fails the condition (1 > 2 is false), so nothing is dropped
+assert(dropWhile(nums, (x: Int) => x > 2) == nums)
+
+// --- Test Case 4: Testing with other types (String) ---
+val words = List("ant", "ape", "bat", "apple")
+assert(dropWhile(words, (s: String) => s.startsWith("a")) == List("bat", "apple"))
+
+// --- Test Case 5: Dropping from Nil ---
+// Calling dropWhile on an empty list must return Nil safely without errors
+assert(dropWhile(Nil, (x: Int) => x > 0) == Nil)
+
+// --- Test Case 6: Single-element list ---
+assert(dropWhile(List(10), (x: Int) => x == 10) == Nil)
+assert(dropWhile(List(10), (x: Int) => x != 10) == List(10))
+
+3. EXIT
+-------
+scala> :quit
