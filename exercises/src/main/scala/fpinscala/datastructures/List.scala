@@ -1,5 +1,7 @@
 package fpinscala.datastructures
 
+import scala.{sys => ys}
+
 sealed trait List[+A] // `List` data type, parameterized on a type, `A`
 case object Nil extends List[Nothing] // A `List` data constructor representing the empty list
 /* Another data constructor, representing nonempty lists. Note that `tail` is another `List[A]`,
@@ -81,7 +83,12 @@ object List { // `List` companion object. Contains functions for creating and wo
       case _ => l
     }
 
-  def init[A](l: List[A]): List[A] = ???
+  def init[A](l: List[A]): List[A] =
+    l match {
+      case Nil => sys.error("input is an empty list")
+      case Cons(a, Nil) => Nil
+      case Cons(a, ls) => Cons(a, init(ls))
+    }
 
   def length[A](l: List[A]): Int = ???
 
