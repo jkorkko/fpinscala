@@ -1,0 +1,58 @@
+================================================================================
+EXERCISE 3.4 TESTING GUIDE (drop)
+===============================================================================
+*Generated with Gemini*
+GOAL:
+Remove the first n elements from a List[A].
+Signature: def drop[A](l: List[A], n: Int): List[A]
+
+1. PREPARATION
+--------------
+Ensure your implementation is saved in:
+  exercises/src/main/scala/fpinscala/datastructures/List.scala
+
+Run in project root:
+  $ sbt "project exercises" console
+
+2. REPL COMMANDS
+----------------
+Copy and paste into the sbt console (scala>):
+
+import fpinscala.datastructures._
+import fpinscala.datastructures.List._
+val nums = List(1, 2, 3, 4, 5)
+
+// --- Test Case 1: Standard intermediate drop ---
+assert(drop(nums, 1) == List(2, 3, 4, 5))
+assert(drop(nums, 2) == List(3, 4, 5))
+assert(drop(nums, 3) == List(4, 5))
+
+
+// --- Test Case 2: Drop zero elements (Identity) ---
+// Dropping 0 elements should return the exact same list
+assert(drop(nums, 0) == nums)
+
+
+// --- Test Case 3: Drop negative count ---
+// Dropping <= 0 elements should return the list without modification
+assert(drop(nums, -1) == nums)
+assert(drop(nums, -5) == nums)
+
+// --- Test Case 4: Drop exact list length ---
+// Dropping all elements leaves an empty list (Nil)
+assert(drop(nums, 5) == Nil)
+
+// --- Test Case 5: Drop more elements than list length ---
+// Dropping beyond the end of the list should safely return Nil
+assert(drop(nums, 10) == Nil)
+assert(drop(List(42), 2) == Nil)
+
+// --- Test Case 6: Drop from empty list (Nil) ---
+// Dropping any number of elements from Nil should safely result in Nil
+assert(drop(Nil, 0) == Nil)
+assert(drop(Nil, 1) == Nil)
+assert(drop(Nil, 5) == Nil)
+
+3. EXIT
+-------
+scala> :quit
