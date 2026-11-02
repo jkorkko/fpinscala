@@ -1,0 +1,23 @@
+// Tests generated with Gemini
+// Commands to test Exercise 3.2 (tail)
+// Run: sbt "project exercises" console
+
+import fpinscala.datastructures._
+import fpinscala.datastructures.List._
+
+// Multi-element
+assert(tail(List(1, 2, 3)) == List(2, 3))
+
+// Single element
+assert(tail(List(99)) == Nil)
+
+// Different types (String) ---
+val strings = List("apple", "banana", "cherry")
+val stringsTail = tail(strings)
+// stringsTail should be List("banana", "cherry")
+assert(stringsTail == List("banana", "cherry"))
+
+// Check Nil handling (if using sys.error):
+// recommended: tail(Nil) -> throws RuntimeException: tail of empty list
+// if return implemented to Nil
+assert(tail(Nil) == Nil))
