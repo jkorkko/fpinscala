@@ -1,0 +1,61 @@
+================================================================================
+EXERCISE 3.3 TESTING GUIDE (setHead)
+================================================================================
+*Generated with Gemini*
+GOAL:
+Replace the first element of a List[A] with a different value in O(1) time.
+Signature: def setHead[A](l: List[A], h: A): List[A]
+
+1. PREPARATION
+--------------
+Ensure your implementation is saved in:
+  exercises/src/main/scala/fpinscala/datastructures/List.scala
+
+Run in project root:
+  $ sbt "project exercises" console
+
+2. REPL COMMANDS
+----------------
+Copy and paste into the sbt console (scala>):
+
+import fpinscala.datastructures._
+import fpinscala.datastructures.List._
+
+// --- Test Case 1: Standard multi-element list ---
+val nums = List(1, 2, 3, 4)
+val updatedNums = setHead(nums, 99)
+assert(updatedNums == List(99, 2, 3, 4))
+
+// Verify original list is unchanged (immutability)
+assert(nums == List(1, 2, 3, 4))
+
+
+// --- Test Case 2: Single-element list ---
+val single = List("original")
+val updatedSingle = setHead(single, "replaced")
+assert(updatedSingle == List("replaced"))
+
+
+// --- Test Case 3: Preserving the tail reference structure ---
+val originalTail = tail(nums)
+val replacedHead = setHead(nums, 0)
+// The tail of replacedHead should share structure with originalTail
+assert(tail(replacedHead) == originalTail)
+
+
+// --- Test Case 4: Edge Case on Nil ---
+// Depending on how you handle empty lists:
+// Option A (Book convention): throws a RuntimeException / sys.error
+try {
+  setHead(Nil, 100)
+  assert(false, "Expected exception on setHead(Nil, ...)")
+} catch {
+  case e: RuntimeException => println("Caught expected error on Nil: " + e.getMessage)
+}
+
+// Option B (If you chose to return Cons(h, Nil) instead):
+// assert(setHead(Nil, 100) == List(100))
+
+3. EXIT
+-------
+scala> :quit
