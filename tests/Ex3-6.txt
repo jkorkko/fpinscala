@@ -1,0 +1,55 @@
+================================================================================
+EXERCISE 3.6 TESTING GUIDE (init)
+================================================================================
+*NOTE generated with Gemini*
+GOAL:
+Return a List consisting of all but the last element of a given List.
+Signature: def init[A](l: List[A]): List[A]
+
+1. PREPARATION
+--------------
+Ensure your implementation is saved in:
+  exercises/src/main/scala/fpinscala/datastructures/List.scala
+Run in project root:
+  $ sbt "project exercises" console
+
+2. REPL COMMANDS
+----------------
+Copy and paste into the sbt console (scala>):
+import fpinscala.datastructures._
+import fpinscala.datastructures.List._
+
+// --- Test Case 1: Standard multi-element list ---
+val nums = List(1, 2, 3, 4)
+assert(init(nums) == List(1, 2, 3))
+
+// --- Test Case 2: Two-element list ---
+val pair = List("first", "second")
+assert(init(pair) == List("first"))
+
+// --- Test Case 3: Single-element list ---
+// Removing the last element from a one-element list must leave an empty list
+val single = List(42)
+assert(init(single) == Nil)
+
+// --- Test Case 4: Larger list check ---
+val longer = List(10, 20, 30, 40, 50)
+assert(init(longer) == List(10, 20, 30, 40))
+
+// --- Test Case 5: The Nil Edge Case ---
+// Depending on how you handle empty lists:
+// Option A (Book convention): throws a RuntimeException / sys.error
+try {
+  init(Nil)
+  assert(false, "Expected exception on init(Nil)")
+} catch {
+  case e: RuntimeException => println("Caught expected error on Nil: " + e.getMessage)
+}
+
+// Option B (If you chose to return Nil on Nil):
+// assert(init(Nil) == Nil)
+
+
+3. EXIT
+-------
+scala> :quit
