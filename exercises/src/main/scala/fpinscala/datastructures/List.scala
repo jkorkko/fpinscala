@@ -59,7 +59,12 @@ object List { // `List` companion object. Contains functions for creating and wo
     case Cons(_, xs) => xs // return tail of list
   }
 
-  def setHead[A](l: List[A], h: A): List[A] = ???
+  def setHead[A](l: List[A], h: A): List[A] = l match {
+    // if list is empty throw err
+    case Nil => sys.error("tail of empty list")
+    // else replace head and return list
+    case Cons(_, ls) => Cons(h, ls)
+  }
 
   def drop[A](l: List[A], n: Int): List[A] = ???
 
