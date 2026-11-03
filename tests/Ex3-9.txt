@@ -1,0 +1,50 @@
+================================================================================
+EXERCISE 3.9 TESTING GUIDE (length using foldRight)
+================================================================================
+*NOTE generated using Gemini*
+GOAL:
+Compute the length of a List[A] using foldRight.
+Signature: def length[A](as: List[A]): Int
+
+1. PREPARATION
+--------------
+Ensure your implementation is saved in:
+  exercises/src/main/scala/fpinscala/datastructures/List.scala
+
+Run in project root:
+  $ sbt "project exercises" console
+
+2. REPL COMMANDS
+----------------
+Copy and paste into the sbt console (scala>):
+import fpinscala.datastructures._
+import fpinscala.datastructures.List._
+
+// --- Test Case 1: Empty list (Nil) ---
+// The length of an empty list must be 0
+assert(length(Nil) == 0)
+
+// --- Test Case 2: Single-element list ---
+assert(length(List(42)) == 1)
+assert(length(List("only-one")) == 1)
+
+// --- Test Case 3: Standard multi-element list ---
+val nums = List(1, 2, 3, 4, 5)
+assert(length(nums) == 5)
+
+// --- Test Case 4: Different element types ---
+val strings = List("scala", "functional", "programming")
+assert(length(strings) == 3)
+
+val booleans = List(true, false, true, true)
+assert(length(booleans) == 4)
+
+
+// --- Test Case 5: Large list check ---
+// Check that all elements are counted properly across multiple items
+val tenItems = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+assert(length(tenItems) == 10)
+
+3. EXIT
+-------
+scala> :quit
