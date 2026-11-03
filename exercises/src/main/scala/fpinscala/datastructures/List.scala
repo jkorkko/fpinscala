@@ -51,7 +51,6 @@ object List { // `List` companion object. Contains functions for creating and wo
   def product2(ns: List[Double]) =
     foldRight(ns, 1.0)(_ * _) // `_ * _` is more concise notation for `(x,y) => x * y`; see sidebar
 
-
   def tail[A](l: List[A]): List[A] = l match {
     //case Nil => Nil // if list is empty
     // Book recommends throwing an error when tail is
@@ -90,7 +89,12 @@ object List { // `List` companion object. Contains functions for creating and wo
       case Cons(a, ls) => Cons(a, init(ls))
     }
 
-  def length[A](l: List[A]): Int = ???
+  def length[A](l: List[A]): Int = 
+    l match {
+      case Nil => 0
+      case Cons(a, Nil) => 1
+      case Cons(a, ls) => foldRight(l, 0)((l, i) => i + 1)
+    }
 
   def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = ???
 
