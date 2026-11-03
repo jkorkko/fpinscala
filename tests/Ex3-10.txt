@@ -1,0 +1,60 @@
+================================================================================
+EXERCISE 3.10 TESTING GUIDE (foldLeft)
+================================================================================
+*Note generated with Gemini*
+GOAL:
+Implement a tail-recursive foldLeft to fold a List from left to right.
+Signature: def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B
+
+1. PREPARATION
+--------------
+Ensure your implementation is saved in:
+  exercises/src/main/scala/fpinscala/datastructures/List.scala
+
+Run in project root:
+  $ sbt "project exercises" console
+
+2. REPL COMMANDS
+----------------
+Copy and paste into the sbt console (scala>):
+
+import fpinscala.datastructures._
+import fpinscala.datastructures.List._
+
+val nums = List(1, 2, 3, 4)
+
+// --- Test Case 1: Empty list (Nil) ---
+// Should immediately return the accumulator z
+assert(foldLeft(Nil: List[Int], 0)(_ + _) == 0)
+assert(foldLeft(Nil: List[String], "init")(_ + _) == "init")
+
+// --- Test Case 2: Commutative operation (Sum) ---
+assert(foldLeft(nums, 0)(_ + _) == 10)
+
+// --- Test Case 3: Left-associativity verification (Subtraction) ---
+// foldLeft associates to the left: (((0 - 1) - 2) - 3) - 4 = -10
+// Contrast with foldRight: 1 - (2 - (3 - (4 - 0))) = -2
+assert(foldLeft(nums, 0)(_ - _) == -10)
+
+// --- Test Case 4: Left-associativity with String concatenation ---
+// Starts with accumulator "start" on the left:
+val words = List("a", "b", "c")
+assert(foldLeft(words, "start")((acc, s) => s"$acc-$s") == "start-a-b-c")
+
+
+// --- Test Case 5: Stack Safety Check (Tail Recursion) ---
+// IMPORTANT REPL NOTE:
+// Cons is a case class whose compiler-generated toString is recursive.
+// If you evaluate a 10,000-element List directly, the REPL printer will
+// crash with a StackOverflowError in Cons.toString, NOT foldLeft itself!
+//
+// We append `; ()` to suppress REPL printing while building the list:
+val largeList = (1 to 10000).foldRight(Nil: List[Int])(Cons(_, _)); ()
+
+// If foldLeft is tail-recursive, this executes safely in constant stack space:
+val largeSum = foldLeft(largeList, 0)(_ + _)
+assert(largeSum == 50005000)
+
+3. EXIT
+-------
+scala> :quit
