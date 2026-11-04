@@ -1,0 +1,70 @@
+================================================================================
+EXERCISE 3.12 TESTING GUIDE (reverse using a fold)
+================================================================================
+*Note generated with Gemini*
+GOAL:
+Write a function that returns the reverse of a list using a fold.
+Signature: def reverse[A](as: List[A]): List[A]
+
+1. PREPARATION
+--------------
+Ensure your implementation is saved in:
+  exercises/src/main/scala/fpinscala/datastructures/List.scala
+
+Run in project root:
+  $ sbt "project exercises" console
+
+2. REPL COMMANDS
+----------------
+Copy and paste into the sbt console (scala>):
+
+import fpinscala.datastructures._
+import fpinscala.datastructures.List._
+
+// --- Test Case 1: Empty list (Nil) ---
+assert(revert(Nil) == Nil)
+
+// --- Test Case 2: Single element (Identity) ---
+assert(revert(List(42)) == List(42))
+assert(revert(List("single")) == List("single"))
+
+// --- Test Case 3: Standard multi-element list ---
+val nums = List(1, 2, 3, 4, 5)
+assert(revert(nums) == List(5, 4, 3, 2, 1))
+
+val words = List("first", "second", "third")
+assert(revert(words) == List("third", "second", "first"))
+
+// --- Test Case 4: Double reverse (Invariance law) ---
+// For any list xs, revert(reverse(xs)) == xs
+val original = List(10, 20, 30)
+assert(revert(revert(original)) == original)
+
+// --- Test Case 5: Palindrome preservation ---
+val palindrome = List(1, 2, 3, 2, 1)
+assert(revert(palindrome) == palindrome)
+
+// --- Test Case 6: Stack Safety Check (Tail Recursion Verification) ---
+// We wrap in object BigData to prevent the REPL printer from invoking Cons.toString
+// and crashing with a StackOverflowError:
+object BigData {
+  val list: List[Int] = (1 to 10000).foldRight(Nil: List[Int])(Cons(_, _))
+}
+
+// Reversing 10,000 items:
+// If implemented via foldLeft, this executes in constant stack space:
+//val reversedHead = revert// Reversing 10,000 items:
+// If implemented via foldLeft, this executes in constant stack space:
+val reversedHead = revert(BigData.list) match {
+  case Cons(h, _) => h
+  case Nil => -1
+}
+(BigData.list) match {
+  case Cons(h, _) => h
+  case Nil => -1
+}
+assert(reversedHead == 10000)
+
+3. EXIT
+-------
+scala> :quit
